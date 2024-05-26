@@ -48,16 +48,14 @@ class ExportLuaCode {
         let codeContent = `self._${varName} = view:GetTransition("${varName}")`;
         this.contentArr.push(codeContent);
     }
-    showTips(strTips) {
-        setTimeout(() => {
-            csharp_1.FairyEditor.App.CloseWaiting();
-        }, 2000);
-        csharp_1.FairyEditor.App.ShowWaiting(strTips);
-    }
     addContextMenuItem() {
         this.contextMenu.AddItem("导出为Lua代码并拷贝", this.menuName, () => {
             let selector = this.libView.GetSelectedResource();
-            this.exportCode(selector.file);
+            if (selector.file.endsWith(".xml"))
+                this.exportCode(selector.file);
+            else
+                globalThis.Utils.showTips("不支持的导出类型");
+            // console.log("selector.supportResolution", selector.supportResolution);
         });
     }
     removeContextMenuItem() {
@@ -89,7 +87,7 @@ class ExportLuaCode {
             let codeContent = this.contentArr.join("\n");
             csharp_1.FairyEditor.Clipboard.SetText(codeContent);
             this.contentArr = [];
-            this.showTips("已转化为Lua并拷贝,ctrl+v粘贴到文件中,CV快乐");
+            globalThis.Utils.showTips("已转化为Lua并拷贝,ctrl+v粘贴到文件中,CV快乐");
         }
     }
 }

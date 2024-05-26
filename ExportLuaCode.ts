@@ -1,5 +1,6 @@
 import { FairyEditor } from 'csharp';
 import { System } from 'csharp';
+
 const convert = require("lib/xml-js");
 
 class ExportLuaCode {
@@ -56,17 +57,19 @@ class ExportLuaCode {
         this.contentArr.push(codeContent);
     }
 
-    public showTips(strTips) {
-        setTimeout(() => {
-            FairyEditor.App.CloseWaiting();
-        }, 2000);
-        FairyEditor.App.ShowWaiting(strTips);
-    }
+
 
     private addContextMenuItem() {
         this.contextMenu.AddItem("导出为Lua代码并拷贝", this.menuName, () => {
             let selector = this.libView.GetSelectedResource()
-            this.exportCode(selector.file);
+
+            if (selector.file.endsWith(".xml"))
+                this.exportCode(selector.file);
+            else
+                globalThis.Utils.showTips("不支持的导出类型");
+
+            // console.log("selector.supportResolution", selector.supportResolution);
+
         });
     }
 
@@ -102,7 +105,7 @@ class ExportLuaCode {
             let codeContent = this.contentArr.join("\n");
             FairyEditor.Clipboard.SetText(codeContent);
             this.contentArr = [];
-            this.showTips("已转化为Lua并拷贝,ctrl+v粘贴到文件中,CV快乐");
+            globalThis.Utils.showTips("已转化为Lua并拷贝,ctrl+v粘贴到文件中,CV快乐");
         }
 
 
