@@ -1,0 +1,11 @@
+{
+  "name": "export_lua",
+  "displayName": "Lua代码片段",
+  "description": "导出ui组件为lua代码并拷贝，ctrl+v粘贴到文件中",
+  "version": "1.0",
+  "author": {
+    "name": "Administrator"
+  },
+  "icon": "",
+  "main": "main.js"
+}
