@@ -32,8 +32,6 @@ class PublishChecker {
             if (this.waitPkgArr.length < 1 || this.reload != this.refreshed) {
                 this.clearData();
             }
-            // this.lastPkg = null;
-            // this.publishHandler = null;
         }, 3000);
         this.refreshed = true;
         this.tryPublish();
